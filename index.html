@@ -2,11 +2,99 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Trader Vogue Risk Calculator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trader Vogue | Risk Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #0f0f0f;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+    h1 {
+      color: #39ff14;
+      margin-bottom: 30px;
+    }
+    .calculator {
+      background: #1f1f1f;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 400px;
+      width: 100%;
+      box-shadow: 0 0 20px #39ff14;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 4px;
+      background: #2a2a2a;
+      border: none;
+      color: white;
+      border-radius: 5px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px;
+      width: 100%;
+      background-color: #39ff14;
+      color: black;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .result {
+      margin-top: 20px;
+      padding: 10px;
+      background: #282828;
+      border-radius: 8px;
+    }
+  </style>
 </head>
 <body>
-  <h1>Trader Vogue Risk Calculator</h1>
-  <!-- Risk calculator content here -->
+  <h1>Trader Vogue - Risk Calculator</h1>
+  <div class="calculator">
+    <label for="capital">Account Capital ($):</label>
+    <input type="number" id="capital" placeholder="e.g. 1000" />
+
+    <label for="risk">Risk per Trade (%):</label>
+    <input type="number" id="risk" placeholder="e.g. 1" />
+
+    <label for="sl">Stop Loss (pips or points):</label>
+    <input type="number" id="sl" placeholder="e.g. 30" />
+
+    <button onclick="calculateRisk()">Calculate Lot Size</button>
+
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    function calculateRisk() {
+      const capital = parseFloat(document.getElementById('capital').value);
+      const riskPercent = parseFloat(document.getElementById('risk').value);
+      const stopLoss = parseFloat(document.getElementById('sl').value);
+
+      if (isNaN(capital) || isNaN(riskPercent) || isNaN(stopLoss)) {
+        document.getElementById('result').innerText = "Please fill all fields correctly.";
+        return;
+      }
+
+      const riskAmount = (capital * riskPercent) / 100;
+      const lotSize = riskAmount / stopLoss;
+
+      document.getElementById('result').innerHTML = `
+        Risk Amount: <strong>$${riskAmount.toFixed(2)}</strong><br/>
+        Suggested Lot Size: <strong>${lotSize.toFixed(2)} lots</strong>
+      `;
+    }
+  </script>
 </body>
 </html>
+<!-- updated -->
